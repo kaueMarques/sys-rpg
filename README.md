@@ -1,2 +1,0 @@
-# sys-rpg
-sistema rpg

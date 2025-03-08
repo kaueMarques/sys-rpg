@@ -1,11 +1,11 @@
 package dev.mbkaue.sysrpg.dto.player;
 
+import java.util.List;
+import java.util.UUID;
+
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
-import dev.mbkaue.sysrpg.dto.ClasseDTO;
-import dev.mbkaue.sysrpg.dto.StatusDTO;
-import dev.mbkaue.sysrpg.dto.inventario.MochilaDTO;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -14,11 +14,10 @@ import lombok.ToString;
 @Setter
 @ToString
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class PlayerCharDTO {
+public class UserDTO {
+    
+    private UUID idUser;
+    private String nomeJogador;
+    private List<PlayerCharDTO> personagens;
 
-    private String historiaPersonagem;
-    private UserDTO user;
-    private ClasseDTO classe;
-    private MochilaDTO mochila;
-    private StatusDTO status;
 }
