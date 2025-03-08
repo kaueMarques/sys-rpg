@@ -4,158 +4,104 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Ficha de RPG - Investigação</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
-    <style>
-        body {
-            background-color: #f9f9f9;
-            color: #333;
-            font-family: 'Poppins', sans-serif;
-        }
-        .ui.card {
-            background-color: #fff;
-            border-radius: 15px;
-            border: none;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-        h1 {
-            font-family: 'Roboto Mono', monospace;
-            color: #4183c4;
-            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.1);
-        }
-        .form-label {
-            font-weight: 600;
-        }
-        .form-control {
-            background-color: #fff;
-            border: 1px solid #ddd;
-            color: #333;
-            font-family: 'Roboto Mono', monospace;
-            transition: all 0.3s;
-        }
-        .form-control:focus {
-            background-color: #fff;
-            border-color: #4183c4;
-            box-shadow: 0 0 5px rgba(65, 131, 196, 0.8);
-        }
-        .btn-primary {
-            background-color: #4183c4;
-            border: none;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: all 0.3s;
-        }
-        .btn-primary:hover {
-            background-color: #357ab8;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-        .img-thumbnail {
-            border: 3px solid #4183c4;
-            transition: all 0.3s;
-        }
-        .img-thumbnail:hover {
-            transform: scale(1.1);
-            cursor: pointer;
-        }
-        .modal-content {
-            background-color: #fff;
-            border-radius: 10px;
-            color: #333;
-        }
-        .modal-header, .modal-footer {
-            border-bottom: none;
-            border-top: none;
-        }
-    </style>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css">
 </head>
 <body>
 
-    <div class="ui container mt-5">
-        <h1 class="ui center aligned header">Ficha de Investigação</h1>
-        <div class="ui card p-4 shadow-lg">
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Ficha de Investigação</h1>
+        <div class="card p-4 shadow-lg">
             <!-- Imagem do Personagem (Centralizada no topo) -->
-            <div class="ui center aligned segment">
-                <div class="ui circular image">
-                    <img id="playerImage" src="" alt="Imagem do Detetive" class="img-thumbnail" style="width: 150px; height: 150px; object-fit: cover; display: none;" onclick="openModal()">
+            <div class="text-center mb-4">
+                <div class="position-relative">
+                    <img id="playerImage" src="" alt="Imagem do Detetive" class="img-thumbnail rounded-circle mb-3" style="width: 150px; height: 150px; object-fit: cover; display: none;" onclick="openModal()">
                 </div>
             </div>
 
-            <form class="ui form">
+            <form>
                 <!-- Atributos do Personagem -->
-                <div class="field">
+                <div class="mb-3">
                     <label class="form-label">Nome do Detetive:</label>
                     <input type="text" class="form-control" th:value="${playerChar.user.nomeJogador}" readonly>
                 </div>
 
-                <div class="field">
+                <div class="mb-3">
                     <label class="form-label">Classe:</label>
                     <input type="text" class="form-control" th:value="${playerChar.classe.nomeClasse}" readonly>
                 </div>
 
-                <div class="field">
+                <div class="mb-3">
                     <label class="form-label">Nível:</label>
                     <input type="number" class="form-control" th:value="${playerChar.classe.vidaInicial}" readonly>
                 </div>
 
-                <div class="three fields">
-                    <div class="field">
+                <div class="row">
+                    <div class="col-md-4">
                         <label class="form-label">Força:</label>
                         <input type="number" class="form-control" th:value="${playerChar.status.forca}" readonly>
                     </div>
-                    <div class="field">
+                    <div class="col-md-4">
                         <label class="form-label">Destreza:</label>
                         <input type="number" class="form-control" th:value="${playerChar.status.destreza}" readonly>
                     </div>
-                    <div class="field">
+                    <div class="col-md-4">
                         <label class="form-label">Constituição:</label>
                         <input type="number" class="form-control" th:value="${playerChar.status.constituicao}" readonly>
                     </div>
                 </div>
 
-                <div class="three fields">
-                    <div class="field">
+                <div class="row mt-3">
+                    <div class="col-md-4">
                         <label class="form-label">Inteligência:</label>
                         <input type="number" class="form-control" th:value="${playerChar.status.inteligencia}" readonly>
                     </div>
-                    <div class="field">
+                    <div class="col-md-4">
                         <label class="form-label">Sabedoria:</label>
                         <input type="number" class="form-control" th:value="${playerChar.status.sabedoria}" readonly>
                     </div>
-                    <div class="field">
+                    <div class="col-md-4">
                         <label class="form-label">Carisma:</label>
                         <input type="number" class="form-control" th:value="${playerChar.status.carisma}" readonly>
                     </div>
                 </div>
 
                 <!-- Inventário do Personagem -->
-                <h3 class="ui dividing header">Inventário</h3>
-                <div class="ui relaxed divided list">
-                    <div class="item" th:each="itemDoPlayer : ${playerChar.mochila.itens}">
-                        <i class="large box middle aligned icon"></i>
-                        <div class="content">
-                            <a class="header" th:text="${itemDoPlayer.item.nomeItem}">Item Name</a>
-                            <div class="description" th:text="${itemDoPlayer.item.descricao}">Item Description</div>
-                            <div class="description" th:text="'Quantidade: ' + ${itemDoPlayer.qntItens}">Quantidade: 1</div>
+                <h3 class="mt-4">Inventário</h3>
+                <ul class="list-group">
+                    <li class="list-group-item" th:each="itemDoPlayer : ${playerChar.mochila.itens}">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h5 th:text="${itemDoPlayer.item.nomeItem}">Item Name</h5>
+                                <p class="mb-0" th:text="${itemDoPlayer.item.descricao}">Item Description</p>
+                            </div>
+                            <span class="badge bg-primary rounded-pill" th:text="'Quantidade: ' + ${itemDoPlayer.qntItens}">Quantidade: 1</span>
                         </div>
-                    </div>
-                </div>
+                    </li>
+                </ul>
 
                 <!-- Botão para salvar ou realizar alguma ação (se necessário) -->
-                <div class="field">
-                    <button type="button" class="ui primary button w-100">Salvar Ficha</button>
+                <div class="mt-4">
+                    <button type="button" class="btn btn-primary w-100">Salvar Ficha</button>
                 </div>
             </form>
         </div>
     </div>
 
     <!-- Modal para alteração da imagem -->
-    <div class="ui modal" id="imageModal">
-        <div class="header">Alterar Imagem</div>
-        <div class="content">
-            <input type="file" id="imageUpload" accept="image/*" onchange="previewImage(event)" class="form-control">
-        </div>
-        <div class="actions">
-            <div class="ui black deny button">Fechar</div>
+    <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="imageModalLabel">Alterar Imagem</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="file" id="imageUpload" accept="image/*" onchange="previewImage(event)" class="form-control">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -172,7 +118,8 @@
 
         // Função para abrir o modal
         function openModal() {
-            $('#imageModal').modal('show');
+            const myModal = new bootstrap.Modal(document.getElementById('imageModal'));
+            myModal.show();
         }
 
         // Função para salvar e exibir a imagem
@@ -186,7 +133,8 @@
                     image.src = reader.result;
                     image.style.display = 'block';
                     // Fechar o modal após a seleção da imagem
-                    $('#imageModal').modal('hide');
+                    const myModal = bootstrap.Modal.getInstance(document.getElementById('imageModal'));
+                    myModal.hide();
                 };
                 reader.readAsDataURL(file);
             }
@@ -199,6 +147,6 @@
     </script>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
